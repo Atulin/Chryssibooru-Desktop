@@ -1,18 +1,35 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <button @click="load">Load</button>
+    <div v-for="d in derpis" :key="d.id">
+      <span>{{ d.url }} : {{d.id}}</span>
+      <router-link :to="{ name: 'Viewer', params: { id: Number(d.id) } }">View</router-link>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import DerpisSource, { Derpi } from '@/state/derpis';
+import axios from 'axios';
 
 export default defineComponent({
   name: 'Home',
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      derpis: DerpisSource.derpis,
+    };
+  },
+  methods: {
+
+    load() {
+      axios.get('https://derpibooru.org/api/v1/json/search/images?q=safe')
+        .then((res) => {
+          // eslint-disable-next-line max-len
+          DerpisSource.derpis.push(...res.data.images.map((img: any) => new Derpi(Number(img.id), img.representations.full)));
+        })
+        .catch(console.error);
+    },
   },
 });
 </script>

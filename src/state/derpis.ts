@@ -1,5 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
 import { reactive } from 'vue';
+import { clamp } from '@/helpers';
 
 export class Derpi {
   id: number;
@@ -19,8 +20,8 @@ export class DerpisStore {
     this.derpis = derpis;
   }
 
-  public getDerpi(id: number) : Derpi|null {
-    return this.derpis.find((d) => d.id === id) ?? null;
+  public getDerpi(id: number) : Derpi {
+    return this.derpis[clamp(id, 0, this.derpis.length - 1)];
   }
 }
 

@@ -1,4 +1,4 @@
-# derpibooru-desktop
+# chryssibooru-desktop
 
 ## Project setup
 ```

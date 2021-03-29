@@ -4,4 +4,4 @@ export const clamp = (
   max: number,
 ): number => Math.max(min, Math.min(num, max));
 
-export const foo = (): string => 'bar';
+export const isNullOrWhitespace = (str: string): boolean => !str || !str.trim();

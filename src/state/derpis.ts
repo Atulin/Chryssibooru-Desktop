@@ -1,28 +1,21 @@
-// eslint-disable-next-line max-classes-per-file
 import { reactive } from 'vue';
 import { clamp } from '@/helpers';
-
-export class Derpi {
-  id: number;
-
-  url: string;
-
-  constructor(id: number, url: string) {
-    this.id = id;
-    this.url = url;
-  }
-}
+import { DerpiImage } from '@/types/derpi-types';
 
 export class DerpisStore {
-  derpis: Derpi[];
+  derpis: Set<DerpiImage>;
 
-  constructor(derpis: Derpi[]) {
+  constructor(derpis: Set<DerpiImage>) {
     this.derpis = derpis;
   }
 
-  public getDerpi(id: number) : Derpi {
-    return this.derpis[clamp(id, 0, this.derpis.length - 1)];
+  public getDerpi(id: number) : DerpiImage {
+    return [...this.derpis][clamp(id, 0, this.derpis.size - 1)];
+  }
+
+  public clear() : void {
+    this.derpis = new Set<DerpiImage>();
   }
 }
 
-export default reactive<DerpisStore>(new DerpisStore([]));
+export default reactive<DerpisStore>(new DerpisStore(new Set<DerpiImage>()));

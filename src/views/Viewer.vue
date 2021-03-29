@@ -1,12 +1,15 @@
 <template>
-  <div class="viewer">{{ derpi.url }}</div>
-  <img :src="derpi.url" alt="">
+  <div class="viewer">{{ derpi.name }}</div>
+  <img :src="derpi.representations.full" alt="">
 </template>
 
 <script lang=ts>
 import { defineComponent } from 'vue';
-import DerpisSource, { Derpi } from '@/state/derpis';
+import DerpisSource from '@/state/derpis';
 import router from '@/router';
+import { DerpiImage } from '@/types/derpi-types';
+import load from '@/shared/load';
+import SearchSource from '@/state/search';
 
 export default defineComponent({
   name: 'Viewer',
@@ -20,15 +23,32 @@ export default defineComponent({
   },
 
   computed: {
-    derpi(): Derpi {
-      return DerpisSource.getDerpi(this.id ?? 0) ?? new Derpi(0, '');
+    derpi(): DerpiImage {
+      return DerpisSource.getDerpi(this.id ?? 0);
     },
   },
 
   methods: {
     handleKey(e: KeyboardEvent) {
-      if (e.key === 'ArrowLeft') router.push({ name: 'Viewer', params: { id: (this.id ?? 0) - 1 } });
-      if (e.key === 'ArrowRight') router.push({ name: 'Viewer', params: { id: (this.id ?? 0) + 1 } });
+      switch (e.key) {
+        case 'ArrowLeft':
+          this.changeImage((this.id ?? 0) - 1);
+          break;
+        case 'ArrowRight':
+          this.changeImage((this.id ?? 0) + 1);
+          break;
+        default:
+          break;
+      }
+    },
+
+    changeImage(idx: number): void {
+      if (DerpisSource.derpis.size - idx <= 5) {
+        console.log('Loading more...');
+        SearchSource.page += 1;
+        load();
+      }
+      router.push({ name: 'Viewer', params: { id: idx } });
     },
   },
 

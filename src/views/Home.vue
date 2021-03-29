@@ -1,5 +1,6 @@
 <template>
 
+  <Drawer/>
   <Viewer v-if="quick" :id="id" @closed="close" />
 
   <main>
@@ -15,8 +16,8 @@
   </main>
 
   <div id="search">
-    <label for="query">Search</label>
-    <input type="text" id="query" v-model="searchData.query">
+    <label for="query"><i class="icon-search"></i></label>
+    <input type="text" id="query" @keyup="handleKeys" v-model="searchData.query">
     <button @click="search">Go!</button>
   </div>
 
@@ -61,10 +62,12 @@ import SearchSource from '@/state/search';
 import load from '@/shared/load';
 import Derpi from '@/components/Derpi.vue';
 import Viewer from '@/views/Viewer.vue';
+import Drawer from '@/components/Drawer.vue';
+import settings from 'electron-settings';
 
 export default defineComponent({
   name: 'Home',
-  components: { Viewer, Derpi },
+  components: { Drawer, Viewer, Derpi },
   data() {
     return {
       derpis: DerpisSource.derpis,
@@ -116,6 +119,10 @@ export default defineComponent({
         });
       }
     },
+
+    handleKeys(e: KeyboardEvent) {
+      if (e.key === 'Enter') this.search();
+    },
   },
   async created() {
     await load();
@@ -123,6 +130,9 @@ export default defineComponent({
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
+  },
+  mounted() {
+    SearchSource.key = settings.getSync('token') as string;
   },
 });
 </script>

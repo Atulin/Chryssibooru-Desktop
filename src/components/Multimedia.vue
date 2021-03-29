@@ -161,7 +161,7 @@ export default defineComponent({
     },
     saveVolume(e: Event) {
       const { value } = e.target as HTMLInputElement;
-      settings.set('volume', Number(value));
+      settings.setSync('volume', Number(value));
     },
     mute() {
       if (this.volume === 0) {
@@ -182,7 +182,7 @@ export default defineComponent({
         this.autoplay = false;
         target.pause();
       }
-      settings.set('autoplay', this.autoplay);
+      settings.setSync('autoplay', this.autoplay);
     },
     ended() {
       this.autoplay = false;

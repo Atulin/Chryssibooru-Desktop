@@ -15,6 +15,7 @@
 
 :root {
   --background: #242424;
+  --background-75: #{rgba(#242424, .75)};
   --foreground: #d9ded6;
   --accent: #00ff66;
   --accent-50: #{rgba(#00ff66, .5)};

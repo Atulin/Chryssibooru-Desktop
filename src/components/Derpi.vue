@@ -1,13 +1,13 @@
 <template>
-  <router-link :to="{ name: 'Viewer', params: { id: id } }">
+  <div class="derpi" @click="quickView">
     <img v-if="derpi.processed" :src="thumb" :alt="derpi.name">
     <div v-else>Not processed yet</div>
     <Score :up="derpi.upvotes" :down="derpi.downvotes" :score="derpi.score" :faves="derpi.faves" />
-  </router-link>
+  </div>
 </template>
 
 <style scoped lang="sass">
-a
+.derpi
   position: relative
   width: 100%
   height: 100%
@@ -15,6 +15,7 @@ a
   transform: scale(1)
   transition: transform 100ms ease-in-out
   color: var(--foreground)
+  cursor: pointer
   &:hover
     transform: scale(1.1)
 
@@ -43,11 +44,21 @@ export default defineComponent({
     },
     id: Number,
   },
+  data() {
+    return {
+      quick: false,
+    };
+  },
   computed: {
     thumb(): string {
       return this.derpi.mime_type.includes('video')
         ? `${this.derpi.representations.thumb.split('.').slice(0, -1).join('.')}.gif`
         : this.derpi.representations.thumb;
+    },
+  },
+  methods: {
+    quickView() {
+      this.$emit('quick', this.id);
     },
   },
 });

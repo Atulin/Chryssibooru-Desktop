@@ -17,6 +17,12 @@
   --background: #242424;
   --foreground: #d9ded6;
   --accent: #00ff66;
+  --accent-50: #{rgba(#00ff66, .5)};
+  --accent-25: #{rgba(#00ff66, .25)};
+}
+
+html, body {
+  background-color: var(--background);
 }
 
 #app {
@@ -62,6 +68,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-pause:before {
+  content: "\e906";
+}
+.icon-play:before {
+  content: "\e907";
+}
 .icon-search:before {
   content: "\e900";
 }
@@ -85,5 +97,20 @@
 }
 .icon-arrow-up:before {
   content: "\e905";
+}
+.icon-volume-high:before {
+  content: "\ea26";
+}
+.icon-volume-medium:before {
+  content: "\ea27";
+}
+.icon-volume-low:before {
+  content: "\ea28";
+}
+.icon-volume-mute:before {
+  content: "\ea29";
+}
+.icon-volume-mute2:before {
+  content: "\ea2a";
 }
 </style>

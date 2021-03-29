@@ -1,8 +1,11 @@
 <template>
+
+  <Viewer v-if="quick" :id="id" @closed="close" />
+
   <main>
     <div ref="grid" id="grid">
       <template v-for="(d, k) in derpis" :key="d.id">
-        <Derpi :derpi="d" :id="k"></Derpi>
+        <Derpi :derpi="d" :id="k" @quick="quickView"></Derpi>
       </template>
     </div>
 
@@ -16,6 +19,7 @@
     <input type="text" id="query" v-model="searchData.query">
     <button @click="search">Go!</button>
   </div>
+
 </template>
 
 <style scoped lang="sass">
@@ -56,10 +60,11 @@ import DerpisSource from '@/state/derpis';
 import SearchSource from '@/state/search';
 import load from '@/shared/load';
 import Derpi from '@/components/Derpi.vue';
+import Viewer from '@/views/Viewer.vue';
 
 export default defineComponent({
   name: 'Home',
-  components: { Derpi },
+  components: { Viewer, Derpi },
   data() {
     return {
       derpis: DerpisSource.derpis,
@@ -70,6 +75,9 @@ export default defineComponent({
       lastKnownScroll: 0,
       ticking: false,
       loading: false,
+
+      quick: false,
+      id: 0,
     };
   },
   methods: {
@@ -79,12 +87,24 @@ export default defineComponent({
       await load();
       this.derpis = DerpisSource.derpis;
     },
+
     async loadMore() {
       this.loading = true;
       SearchSource.page += 1;
       await load();
       this.loading = false;
     },
+
+    quickView(id: number) {
+      console.log(id);
+      this.id = id;
+      this.quick = true;
+    },
+
+    close() {
+      this.quick = false;
+    },
+
     handleScroll() {
       this.lastKnownScroll = window.scrollY;
 

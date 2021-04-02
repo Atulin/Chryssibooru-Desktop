@@ -1,4 +1,5 @@
 import { reactive } from 'vue';
+import { SortDirection, SortField } from '@/types/search-types';
 
 export interface Search {
   baseUrl: string;
@@ -6,8 +7,8 @@ export interface Search {
   page: number;
   perPage: number;
   key: string|null;
-  sortDirection: 'asc'|'desc';
-  sortField: 'id'|'updated_at'|'first_seen_at'|'aspect_ratio'|'faves'|'upvotes'|'downvotes'|'score'|'wilson_score'|'_score'|'width'|'height'|'comment_count'|'tag_count'|'pixels'|'size'|'duration'|'random';
+  sortDirection: SortDirection;
+  sortField: SortField;
 }
 
 export default reactive<Search>({

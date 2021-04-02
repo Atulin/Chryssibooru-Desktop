@@ -17,6 +17,7 @@ import load from '@/shared/load';
 import SearchSource from '@/state/search';
 import { clamp } from '@/helpers';
 import Multimedia from '@/components/Multimedia.vue';
+import electron from 'electron';
 
 export default defineComponent({
   name: 'Viewer',
@@ -42,12 +43,17 @@ export default defineComponent({
 
   methods: {
     async handleKey(e: KeyboardEvent): Promise<boolean> {
+      const win = electron.remote.getCurrentWindow();
+
       switch (e.key) {
         case 'ArrowLeft':
           await this.changeImage((this.mutId ?? 0) - 1);
           break;
         case 'ArrowRight':
           await this.changeImage((this.mutId ?? 0) + 1);
+          break;
+        case 'f':
+          win.setFullScreen(!win.isFullScreen());
           break;
         default:
           e.preventDefault();
@@ -92,16 +98,16 @@ export default defineComponent({
   z-index: 999;
   display: grid;
   grid-template:
-    "head head head " 1fr
+    "headl img headr " 1fr
     "left img  right" 90%
-    "left bottom  right" 1fr / 1fr 90% 1fr;
+    "left img  right" 1fr / 1fr 90% 1fr;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px);
   background-color: rgba(#000, .75);
 
   .head {
-    grid-area: head;
+    grid-area: headr;
     display: flex;
     align-items: stretch;
     justify-content: space-between;

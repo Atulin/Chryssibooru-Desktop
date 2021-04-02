@@ -16,6 +16,7 @@ function createQuery(): string {
       sf: SearchSource.sortField,
     } as URI.QueryDataMap);
   if (SearchSource.key !== null) url.addSearch({ key: SearchSource.key });
+  console.log(url.toString());
   return url.toString();
 }
 

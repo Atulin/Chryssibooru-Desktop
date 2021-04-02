@@ -2,13 +2,13 @@
     <div v-if="derpi.processed" class="media">
 
       <img v-if="derpi.mime_type.includes('image')"
-           :src="derpi.representations.large"
+           :src="derpi.representations.full"
            :alt="derpi.name">
 
       <div class="video" v-if="derpi.mime_type.includes('video')">
 
         <video ref="video"
-               :src="derpi.representations.large"
+               :src="derpi.representations.full"
                :autoplay="autoplay"
                @timeupdate="progress" @ended="ended" @click="playPause"></video>
 

@@ -18,6 +18,17 @@
   <div id="search">
     <label for="query"><i class="icon-search"></i></label>
     <input type="text" id="query" @keyup="handleKeys" v-model="searchData.query">
+
+    <label for="sortfield">Sort</label>
+    <select name="sortfield" id="sortfield" v-model="searchData.sortField">
+      <option v-for="f in sortOptions.fields" :key="f" :value="f">{{ f.toUpperCase() }}</option>
+    </select>
+
+    <label for="sortdir">Dir</label>
+    <select name="sortdir" id="sortdir" v-model="searchData.sortDirection">
+      <option v-for="m in sortOptions.methods" :key="m" :value="m">{{ m.toUpperCase() }}</option>
+    </select>
+
     <button @click="search">Go!</button>
   </div>
 
@@ -60,10 +71,12 @@ import { defineComponent } from 'vue';
 import DerpisSource from '@/state/derpis';
 import SearchSource from '@/state/search';
 import load from '@/shared/load';
+import { fields, methods } from '@/shared/sort';
 import Derpi from '@/components/Derpi.vue';
 import Viewer from '@/views/Viewer.vue';
 import Drawer from '@/components/Drawer.vue';
 import settings from 'electron-settings';
+import { SortDirection, SortField } from '@/types/search-types';
 
 export default defineComponent({
   name: 'Home',
@@ -73,6 +86,13 @@ export default defineComponent({
       derpis: DerpisSource.derpis,
       searchData: {
         query: '',
+        sortField: '',
+        sortDirection: '',
+      },
+
+      sortOptions: {
+        fields,
+        methods,
       },
 
       lastKnownScroll: 0,
@@ -86,6 +106,9 @@ export default defineComponent({
   methods: {
     async search() {
       SearchSource.query = this.searchData.query;
+      SearchSource.sortField = this.searchData.sortField as SortField;
+      SearchSource.sortDirection = this.searchData.sortDirection as SortDirection;
+
       DerpisSource.clear();
       await load();
       this.derpis = DerpisSource.derpis;

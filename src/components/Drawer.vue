@@ -8,7 +8,7 @@
     </label>
 
     <label>
-      Provider
+      Booru
       <select v-model="base" @change="saveBase">
         <option value="https://derpibooru.org">Derpibooru</option>
         <option value="https://ponybooru.org/">Ponybooru</option>

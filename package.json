@@ -15,7 +15,8 @@
     "postuninstall": "electron-builder install-app-deps",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
   },
   "main": "src/background.ts",
   "dependencies": {
@@ -67,7 +68,8 @@
             "repository": {
               "owner": "atulin",
               "name": "chryssibooru-desktop"
-            }
+            },
+            "draft": true
           }
         }
       ],

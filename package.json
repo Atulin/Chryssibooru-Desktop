@@ -2,7 +2,7 @@
   "name": "chryssibooru-desktop",
   "author": "Atulin",
   "description": "Desktop browser for Derpibooru and other Philomena-based boorus",
-  "version": "0.1.1+2",
+  "version": "0.1.1",
   "license": "MIT",
   "private": true,
   "scripts": {

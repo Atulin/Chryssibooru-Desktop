@@ -6,6 +6,14 @@
       Token
       <input type="password" v-model="token" @input="saveToken">
     </label>
+
+    <label>
+      Provider
+      <select v-model="base" @change="saveBase">
+        <option value="https://derpibooru.org">Derpibooru</option>
+        <option value="https://ponybooru.org/">Ponybooru</option>
+      </select>
+    </label>
   </div>
 </template>
 
@@ -20,12 +28,17 @@ export default defineComponent({
     return {
       open: false,
       token: SearchSource.key,
+      base: SearchSource.baseUrl,
     };
   },
   methods: {
     saveToken() {
       settings.setSync('token', this.token);
       SearchSource.key = this.token;
+    },
+    saveBase() {
+      settings.setSync('base', this.base);
+      SearchSource.baseUrl = this.base;
     },
   },
 });

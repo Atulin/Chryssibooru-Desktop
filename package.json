@@ -2,7 +2,7 @@
   "name": "chryssibooru-desktop",
   "author": "Atulin",
   "description": "Desktop browser for Derpibooru and other Philomena-based boorus",
-  "version": "0.1.1",
+  "version": "0.1.1+2",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -65,8 +65,8 @@
           "name": "@electron-forge/publisher-github",
           "config": {
             "repository": {
-              "owner": "erikhofer",
-              "name": "electron-publish-example"
+              "owner": "atulin",
+              "name": "chryssibooru-desktop"
             }
           }
         }
